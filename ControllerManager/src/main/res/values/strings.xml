@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="dialog_title_zh_CN">安全区警告：</string>
+    <string name="dialog_content_gobcak_zh_CN">你已离开游戏安全区，请返回安全区边界内或者重新设置安全边界</string>
+    <string name="dialog_content_toofar_zh_CN">你已离开游戏安全区过远，请摘下头戴显示器，返回安全区边界内或者重新设置安全边界</string>
+    <string name="dialog_content_lost_zh_CN">请勿遮挡前方摄像头，保持室内光线充足。请您重新设置安全边界</string>
+    <string name="dialog_button1_zh_CN">原地设置安全边界</string>
+    <string name="dialog_button2_zh_CN">自定义安全边界</string>
+</resources>
+

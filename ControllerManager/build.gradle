@@ -1,0 +1,73 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        targetSdkVersion 26
+        minSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+
+    flavorDimensions "default"
+//    productFlavors{
+//        ControllerManager{
+//            ndk{
+//                abiFilters "armeabi-v7a","arm64-v8a"
+//            }
+//            externalNativeBuild{
+//                ndkBuild{
+//                    arguments "BUILD_TYPE=so"
+//                }
+//            }
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
+//        }
+//        debug {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
+//        }
+//    }
+//
+//    externalNativeBuild{
+//        ndkBuild{
+//            path 'src/main/jni/Android.mk'
+//        }
+//    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets.main{
+        jni.srcDirs = []
+        jniLibs.srcDirs = ['build/outputs/so']
+    }
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def sdkDir = properties.getProperty('sdk.dir')+"\\ndk-bundle\\ndk-build.cmd"
+    def ndkDir = properties.getProperty('ndk.dir')
+
+    task ndkBuild(type:Exec,description:'Compile JNI source via NDK'){
+        commandLine sdkDir,
+                'NDK_PROJECT_PATH=build/intermediates/ndk',
+                'NDK_LIBS_OUT=build/outputs/so',
+                'APP_BUILD_SCRIPT=src/main/jni/Android.mk',
+                'APP_ABI=armeabi-v7a,arm64-v8a'
+    }
+
+    tasks.withType(JavaCompile){
+        compileTask ->compileTask.dependsOn ndkBuild
+    }
+
+}
+
+dependencies {
+}
